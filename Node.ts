@@ -1,4 +1,1 @@
-import { Canvas } from "./Canvas"
-
-export abstract class Node {
-}
+export abstract class Node {}
