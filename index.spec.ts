@@ -1,8 +1,8 @@
 import "jest"
-import * as library from "./index"
+import * as docly from "./index"
 
 describe("library", () => {
 	it("a", () => {
-		expect(library.a).toEqual(42)
+		expect(docly.Document).toBeTruthy()
 	})
 })

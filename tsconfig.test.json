@@ -24,7 +24,10 @@
 				"types/*"
 			]
 		},
-		"types": ["jest"]
+		"types": [
+			"jest",
+			"node"
+		]
 	},
 	"files": [
 		"index.ts"
