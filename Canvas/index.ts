@@ -10,6 +10,9 @@ import { Options as CanvasOptions } from "./Options"
 import { Text as CanvasText } from "./Text"
 
 export class Canvas {
+	get style(): Style {
+		return this.context.style
+	}
 	readonly meta: MetaData = {}
 	private constructor(private readonly context: Context) {}
 
@@ -38,7 +41,7 @@ export class Canvas {
 		}
 	}
 
-	breakTextIntoLines(textToBreak: string, options: CanvasOptions): string[] {
+	breakIntoLines(textToBreak: string, options: CanvasOptions): Canvas.Text[] {
 		const realWidth =
 			this.context.page.getWidth() -
 			this.context.margin.left -
@@ -47,7 +50,7 @@ export class Canvas {
 
 		return breakTextIntoLines(textToBreak, this.context.document.defaultWordBreaks, realWidth, text =>
 			this.context.fonts[options.font.name].widthOfTextAtSize(text, options.font.size)
-		)
+		).map(line => this.create("text", line, options))
 	}
 	async export(): Promise<Uint8Array> {
 		if (this.meta.title)

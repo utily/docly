@@ -8,7 +8,6 @@ export class Text extends Inline {
 		super()
 	}
 	getOperations(canvas: Canvas, options: Options): Canvas.Inline[] {
-		canvas.create("text", this.value, options)
-		throw new Error("Method not implemented.")
+		return canvas.breakIntoLines(this.value, options)
 	}
 }

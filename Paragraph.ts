@@ -8,6 +8,7 @@ export class Paragraph extends Block {
 		super()
 	}
 	getOperations(canvas: Canvas, options: Options): Canvas.Line[] {
-		throw new Error("Method not implemented.")
+		options = options.modify(canvas.style.paragraph).modify(this.style)
+		return this.content.flatMap(c => c.getOperations(canvas, options).map(o => canvas.create("line", [o])))
 	}
 }

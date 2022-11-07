@@ -30,9 +30,11 @@ describe("docly.Operation", () => {
 		const lineArray: Canvas.Line[] = []
 		const newText =
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque venenatis elit nec enim egestas pellentesque. Duis odio erat, ultrices sit amet pellentesque non, euismod sed quam. Pellentesque eu ligula elementum, aliquet risus non, porta magna. Quisque tincidunt ex in nulla tempus, vel pharetra quam mattis. Sed nec quam semper, rutrum tortor vulputate, aliquet risus. Vestibulum nec porttitor orci. Phasellus pulvinar, ipsum sed tristique suscipit, sem lorem interdum leo, nec pellentesque dolor dui a lorem. Etiam sit amet sem sit amet ipsum consequat pellentesque vitae tempor mi. Pellentesque laoreet lobortis sapien ut placerat. In sed neque nibh. Aenean a scelerisque diam. Aliquam tempor efficitur turpis, quis interdum enim commodo a. Nam euismod, elit vel tincidunt ultricies, nulla justo facilisis massa, sed ullamcorper erat enim et purus. Vivamus imperdiet nibh a lectus suscipit hendrerit id ac velit. Pellentesque non ligula ac tellus imperdiet accumsan. "
-		for (const textLine of canvas.breakTextIntoLines(newText, options)) {
+		for (const textLine of canvas.breakIntoLines(newText, options)) {
 			lineArray.push(canvas.create("line", [canvas.create("text", textLine, options.modify(style.paragraph))]))
 		}
+
+		// lineArray.push(canvas.create("line"))
 
 		for (let i = 0; i < 100; i++) {
 			lineArray.push(
