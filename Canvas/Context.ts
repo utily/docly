@@ -25,6 +25,7 @@ export class Context {
 		this.page = this.document.addPage()
 		this.movePointer()
 	}
+
 	static async create(style: Style): Promise<Context> {
 		const document = await pdf.PDFDocument.create()
 		document.registerFontkit(fontkit)

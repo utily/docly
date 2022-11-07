@@ -1,4 +1,5 @@
 import * as isoly from "isoly"
+import { breakTextIntoLines } from "pdf-lib"
 import { MetaData } from "../MetaData"
 import { Style } from "../Style"
 import { Context } from "./Context"
@@ -35,6 +36,18 @@ export class Canvas {
 
 			;(line as CanvasLine).render()
 		}
+	}
+
+	breakTextIntoLines(textToBreak: string, options: CanvasOptions): string[] {
+		const realWidth =
+			this.context.page.getWidth() -
+			this.context.margin.left -
+			(this.context.page.getWidth() - this.context.margin.right)
+		console.log(realWidth)
+
+		return breakTextIntoLines(textToBreak, this.context.document.defaultWordBreaks, realWidth, text =>
+			this.context.fonts[options.font.name].widthOfTextAtSize(text, options.font.size)
+		)
 	}
 	async export(): Promise<Uint8Array> {
 		if (this.meta.title)
