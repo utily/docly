@@ -14,14 +14,16 @@ export class Context {
 	) {
 		this.page = this.document.addPage()
 		this.margin = new Margin(style.page, this)
+		this.movePointer()
+	}
 
+	private movePointer() {
 		this.page.moveTo(this.margin.left, this.margin.top)
-		console.log(this.page.getPosition())
 	}
 
 	public addPage() {
 		this.page = this.document.addPage()
-		this.document.defaultWordBreaks
+		this.movePointer()
 	}
 	static async create(style: Style): Promise<Context> {
 		const document = await pdf.PDFDocument.create()

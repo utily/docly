@@ -27,15 +27,13 @@ export class Canvas {
 		return result
 	}
 
-	async render(content: Canvas.Line[]): Promise<void> {
-		let length = 0
+	render(content: Canvas.Line[]): void {
 		for (const line of content) {
-			length += line.size.height
-			if (length > this.context.page.getSize().height) {
+			if (this.context.page.getPosition().y < this.context.margin.bottom) {
 				this.context.addPage()
-				length = 0
 			}
-			await (line as CanvasLine).render()
+
+			;(line as CanvasLine).render()
 		}
 	}
 	async export(): Promise<Uint8Array> {
