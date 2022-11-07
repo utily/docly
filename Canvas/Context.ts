@@ -14,16 +14,16 @@ export class Context {
 	) {
 		this.page = this.document.addPage()
 		this.margin = new Margin(style.page, this)
-		this.movePointer()
+		this.movePointer(this.margin.left, this.margin.top)
 	}
 
-	private movePointer() {
-		this.page.moveTo(this.margin.left, this.margin.top)
-	}
-
-	public addPage() {
+	public addNewPage() {
 		this.page = this.document.addPage()
-		this.movePointer()
+		this.movePointer(this.margin.left, this.margin.top)
+	}
+
+	private movePointer(posX: number, posY: number) {
+		this.page.moveTo(posX, posY)
 	}
 
 	static async create(style: Style): Promise<Context> {

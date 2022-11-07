@@ -4,7 +4,7 @@ import { Inline } from "./Inline"
 import { Options } from "./Options"
 
 export class Text extends Inline {
-	private readonly font: pdf.PDFFont
+	public readonly font: pdf.PDFFont
 
 	constructor(readonly value: string, readonly options: Readonly<Options>, context: Context) {
 		const font = context.fonts[options.font.name] // TODO: add font weight and varian to name

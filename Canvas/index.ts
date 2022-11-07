@@ -31,7 +31,7 @@ export class Canvas {
 	render(content: Canvas.Line[]): void {
 		for (const line of content) {
 			if (this.context.page.getPosition().y < this.context.margin.bottom) {
-				this.context.addPage()
+				this.context.addNewPage()
 			}
 
 			;(line as CanvasLine).render()
