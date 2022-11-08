@@ -1,6 +1,6 @@
-import { Canvas } from "./Canvas"
 import { Node } from "./Node"
+import { Operation } from "./Operation"
 
 export abstract class Block extends Node {
-	abstract getOperations(canvas: Canvas, options: Canvas.Options): Canvas.Line[]
+	abstract getOperations(canvas: Operation, options: Operation.Options): Operation.Line[]
 }

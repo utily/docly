@@ -15,7 +15,7 @@ export class Text extends Inline {
 		this.font = font
 	}
 
-	render(): void {
+	render(): [number, number] {
 		this.context.page.drawText(this.value, {
 			size: this.options.font.size,
 			lineHeight: this.options.font.size,

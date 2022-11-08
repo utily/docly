@@ -1,13 +1,13 @@
 import * as pdf from "pdf-lib"
-import { Canvas } from "./Canvas"
-import { Options } from "./Canvas/Options"
 import { Inline } from "./Inline"
+import { Operation } from "./Operation"
+import { Options } from "./Operation/Options"
 
 export class Text extends Inline {
 	constructor(readonly value: string, readonly font: pdf.PDFFont) {
 		super()
 	}
-	getOperations(canvas: Canvas, options: Options): Canvas.Inline[] {
+	getOperations(canvas: Operation, options: Options): Operation.Inline[] {
 		return canvas.breakIntoLines(this.value, options)
 	}
 }

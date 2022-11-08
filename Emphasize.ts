@@ -1,13 +1,13 @@
 import * as pdf from "pdf-lib"
-import { Canvas } from "./Canvas"
-import { Options } from "./Canvas/Options"
 import { Inline } from "./Inline"
+import { Operation } from "./Operation"
+import { Options } from "./Operation/Options"
 
 export class Emphasize extends Inline {
 	constructor(readonly content: Inline[], readonly font: pdf.PDFFont) {
 		super()
 	}
-	getOperations(canvas: Canvas, options: Options): Canvas.Inline[] {
+	getOperations(canvas: Operation, options: Options): Operation.Inline[] {
 		throw new Error("Method not implemented.")
 	}
 }

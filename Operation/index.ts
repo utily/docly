@@ -13,8 +13,7 @@ export class Canvas {
 	get style(): Style {
 		return this.context.style
 	}
-	readonly meta: MetaData = {}
-	private constructor(private readonly context: Context) {}
+	private constructor(private context: Context, readonly meta: MetaData = {}) {}
 
 	create(type: "line", content: Canvas.Inline[]): Canvas.Line
 	create(type: "text", text: string, options: Canvas.Options): Canvas.Text
@@ -31,21 +30,19 @@ export class Canvas {
 		return result
 	}
 
-	render(content: Canvas.Line[]): void {
+	render(content: CanvasLine[]): void {
+		if (this.context.bounds.height < 0)
+			this.context.addNewPage()
 		for (const line of content) {
-			if (this.context.page.getPosition().y < this.context.margin.bottom) {
-				this.context.addNewPage()
-			}
-
-			;(line as CanvasLine).render()
+			line.render()
 		}
 	}
 
 	breakIntoLines(textToBreak: string, options: CanvasOptions): Canvas.Text[] {
 		const realWidth =
 			this.context.page.getWidth() -
-			this.context.margin.left -
-			(this.context.page.getWidth() - this.context.margin.right)
+			this.context.bounds.left -
+			(this.context.page.getWidth() - this.context.bounds.width)
 		console.log(realWidth)
 
 		return breakTextIntoLines(textToBreak, this.context.document.defaultWordBreaks, realWidth, text =>

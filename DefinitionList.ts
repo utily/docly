@@ -1,13 +1,12 @@
 import { Block } from "./Block"
-import { Canvas } from "./Canvas"
-import { Definition } from "./models/Definition"
+import { Inline } from "./Inline"
+import { Operation } from "./Operation"
 
 export class DefinitionList extends Block {
-	constructor(private content: Definition) {
+	constructor(private content: [Inline[], Inline[]][]) {
 		super()
-		
 	}
-	getOperations(canvas: Canvas, options: Canvas.Options): Canvas.Line[] {
-		throw new Error("Method not implemented.")
+	getOperations(canvas: Operation, options: Operation.Options): Operation.Line[] {
+		return this.content.content.map(object => canvas.create("line", [canvas.create("text", object, options)]))
 	}
 }

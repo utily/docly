@@ -1,6 +1,6 @@
+import { Operation } from "./Base"
 import { Context } from "./Context"
 import { Inline } from "./Inline"
-import { Operation } from "./Operation"
 
 export class Line extends Operation {
 	constructor(readonly line: readonly Inline[], context: Context) {
@@ -12,12 +12,12 @@ export class Line extends Operation {
 			})
 		)
 	}
-	render(): void {
+	render(page: Page): [number, number] {
 		const start = this.context.page.getPosition()
 		for (const operator of this.line) {
-			operator.render()
+			operator.render(page)
 			this.context.page.moveRight(operator.size.width)
 		}
-		this.context.page.moveTo(start.x, start.y - this.size.height)
+		return [start.x, start.y - this.size.height]
 	}
 }

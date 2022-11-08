@@ -1,8 +1,8 @@
 import { Block } from "./Block"
-import { Canvas } from "./Canvas"
+import { Operation } from "./Operation"
 
 export class Header extends Block {
-	getOperations(canvas: Canvas, options: Canvas.Options): Canvas.Line[] {
+	getOperations(canvas: Operation, options: Operation.Options): Operation.Line[] {
 		throw new Error("Method not implemented.")
 	}
 }

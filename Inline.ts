@@ -1,6 +1,6 @@
-import { Canvas } from "./Canvas"
 import { Node } from "./Node"
+import { Operation } from "./Operation"
 
 export abstract class Inline extends Node {
-	abstract getOperations(canvas: Canvas, options: Canvas.Options): Canvas.Inline[]
+	abstract getOperations(canvas: Operation, options: Operation.Options): Operation.Inline[]
 }
