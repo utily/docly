@@ -46,25 +46,18 @@ export class Canvas {
 			this.context.page.getWidth() -
 			this.context.margin.left -
 			(this.context.page.getWidth() - this.context.margin.right)
-		console.log(realWidth)
 
 		return breakTextIntoLines(textToBreak, this.context.document.defaultWordBreaks, realWidth, text =>
 			this.context.fonts[options.font.name].widthOfTextAtSize(text, options.font.size)
 		).map(line => this.create("text", line, options))
 	}
 	async export(): Promise<Uint8Array> {
-		if (this.meta.title)
-			this.context.document.setTitle(this.meta.title)
-		if (this.meta.author)
-			this.context.document.setAuthor(this.meta.author)
-		if (this.meta.subject)
-			this.context.document.setSubject(this.meta.subject)
-		if (this.meta.keywords)
-			this.context.document.setKeywords(this.meta.keywords)
-		if (this.meta.created)
-			this.context.document.setCreationDate(isoly.DateTime.parse(this.meta.created))
-		if (this.meta.modified)
-			this.context.document.setModificationDate(isoly.DateTime.parse(this.meta.modified))
+		if (this.meta.title) this.context.document.setTitle(this.meta.title)
+		if (this.meta.author) this.context.document.setAuthor(this.meta.author)
+		if (this.meta.subject) this.context.document.setSubject(this.meta.subject)
+		if (this.meta.keywords) this.context.document.setKeywords(this.meta.keywords)
+		if (this.meta.created) this.context.document.setCreationDate(isoly.DateTime.parse(this.meta.created))
+		if (this.meta.modified) this.context.document.setModificationDate(isoly.DateTime.parse(this.meta.modified))
 		return await this.context.document.save()
 	}
 	static async create(style: Style): Promise<Canvas> {
