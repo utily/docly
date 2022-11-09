@@ -20,24 +20,17 @@ export class Canvas {
 		this.page.moveTo(x, y)
 	}
 	render(content: Line[]): void {
-		if (this.bounds.height < 0)
-			this.page = this.document.addPage()
+		if (this.bounds.height < 0) this.page = this.document.addPage()
 		// TODO: draw text & update bounds
 	}
 
 	async export(meta: MetaData): Promise<Uint8Array> {
-		if (meta.title)
-			this.document.setTitle(meta.title)
-		if (meta.author)
-			this.document.setAuthor(meta.author)
-		if (meta.subject)
-			this.document.setSubject(meta.subject)
-		if (meta.keywords)
-			this.document.setKeywords(meta.keywords)
-		if (meta.created)
-			this.document.setCreationDate(isoly.DateTime.parse(meta.created))
-		if (meta.modified)
-			this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
+		if (meta.title) this.document.setTitle(meta.title)
+		if (meta.author) this.document.setAuthor(meta.author)
+		if (meta.subject) this.document.setSubject(meta.subject)
+		if (meta.keywords) this.document.setKeywords(meta.keywords)
+		if (meta.created) this.document.setCreationDate(isoly.DateTime.parse(meta.created))
+		if (meta.modified) this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
 		return await this.document.save()
 	}
 	static async create(style: Style): Promise<Canvas> {
