@@ -1,6 +1,6 @@
 import { Block } from "./Block"
+import { Operation } from "./Canvas"
 import { MetaData } from "./MetaData"
-import { Operation } from "./Operation"
 import { Style } from "./Style"
 
 export class Document {

@@ -1,7 +1,7 @@
 import { Block } from "./Block"
+import { Operation } from "./Canvas"
+import { Options } from "./Canvas/Options"
 import { TableModel } from "./models/Table"
-import { Operation } from "./Operation"
-import { Options } from "./Operation/Options"
 
 export class Table extends Block {
 	constructor(private readonly table: TableModel) {

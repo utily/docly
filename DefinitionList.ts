@@ -1,6 +1,6 @@
 import { Block } from "./Block"
+import { Operation } from "./Canvas"
 import { Inline } from "./Inline"
-import { Operation } from "./Operation"
 
 export class DefinitionList extends Block {
 	constructor(private content: [Inline[], Inline[]][]) {

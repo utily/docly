@@ -11,6 +11,9 @@
 	},
 	"files": [
 		"index.ts",
+		"./Style/Font.ts",
+		"./Style/Block.ts",
+		"./Operation/Type.ts",
 		"./Canvas/Bounds.ts",
 	]
 }

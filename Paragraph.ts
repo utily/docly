@@ -1,7 +1,7 @@
 import { Block } from "./Block"
+import { Operation } from "./Canvas"
+import { Options } from "./Canvas/Options"
 import { Inline } from "./Inline"
-import { Operation } from "./Operation"
-import { Options } from "./Operation/Options"
 
 export class Paragraph extends Block {
 	constructor(readonly content: Inline[]) {

@@ -1,3 +1,3 @@
-import { Operation } from "./Base"
+import { Operation } from "./Operation"
 
 export abstract class Inline extends Operation {}

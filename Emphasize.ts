@@ -1,7 +1,7 @@
 import * as pdf from "pdf-lib"
+import { Operation } from "./Canvas"
+import { Options } from "./Canvas/Options"
 import { Inline } from "./Inline"
-import { Operation } from "./Operation"
-import { Options } from "./Operation/Options"
 
 export class Emphasize extends Inline {
 	constructor(readonly content: Inline[], readonly font: pdf.PDFFont) {

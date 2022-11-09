@@ -1,5 +1,5 @@
 import { Block } from "./Block"
-import { Operation } from "./Operation"
+import { Operation } from "./Canvas"
 
 export class Header extends Block {
 	getOperations(canvas: Operation, options: Operation.Options): Operation.Line[] {

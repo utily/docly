@@ -1,7 +1,7 @@
 import * as pdf from "pdf-lib"
+import { Operation } from "./Canvas"
+import { Options } from "./Canvas/Options"
 import { Inline } from "./Inline"
-import { Operation } from "./Operation"
-import { Options } from "./Operation/Options"
 
 export class Text extends Inline {
 	constructor(readonly value: string, readonly font: pdf.PDFFont) {
