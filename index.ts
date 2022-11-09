@@ -1,5 +1,4 @@
 export { Block } from "./Block"
-export { DefinitionList } from "./DefinitionList"
 export { Document } from "./Document"
 export { Emphasize } from "./Emphasize"
 export { Header } from "./Header"

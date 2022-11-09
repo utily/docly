@@ -22,6 +22,7 @@ describe("docly.Operation", () => {
 		},
 		paragraph: { font: { name: "ubuntu", size: 10 } },
 	}
+
 	it("simple", async () => {
 		const canvas = await Canvas.create(style)
 		const context = canvas.context
