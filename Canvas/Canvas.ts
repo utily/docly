@@ -22,13 +22,15 @@ export class Canvas {
 	render(content: Line[]): void {
 		if (this.bounds.height < 0) this.page = this.document.addPage()
 		// TODO: draw text & update bounds
+		// Bounds are tied to the page, need to update to original bounds when pagination happens.
+		// Tie them with page?
 
 		this.movePointer(20, 700)
 		for (const line of content) {
 			for (const text of line.values) {
 				//Send options to text, for the text. this we can use to have dynamic text styles.
 				this.page.drawText(text.value, { size: 10 })
-				this.page.moveDown(text.size.height)
+				this.page.moveDown(text.size.height) // Refactor?
 			}
 		}
 	}
