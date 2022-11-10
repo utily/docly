@@ -1,4 +1,6 @@
-* Update render() in canvas 
-* Update bounds in canvas.render()
-* Get rendering working. 
-
+- Update render() in canvas, DONE
+- Update bounds in canvas.render()
+- Get rendering working, DONE
+- BreakIntoLines bounds.width not working OR computation of size not working
+- update bounds in canvas.render() for pagination. also Bounds width?
+-
