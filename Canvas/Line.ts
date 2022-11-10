@@ -1,12 +1,12 @@
 import { Context } from "./Context"
-import { Inline } from "./Inline"
 import { Operation } from "./Operation"
+import { Text } from "./Text"
 
 export class Line extends Operation {
-	constructor(context: Context, readonly line: readonly Inline[]) {
+	constructor(context: Context, readonly values: readonly Text[]) {
 		super(
 			context,
-			line.reduce((r, o) => ({ width: r.width + o.size.width, height: Math.max(r.height, o.size.height) }), {
+			values.reduce((r, o) => ({ width: r.width + o.size.width, height: Math.max(r.height, o.size.height) }), {
 				width: 0,
 				height: 0,
 			})

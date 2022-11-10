@@ -22,6 +22,15 @@ export class Canvas {
 	render(content: Line[]): void {
 		if (this.bounds.height < 0) this.page = this.document.addPage()
 		// TODO: draw text & update bounds
+
+		this.movePointer(20, 700)
+		for (const line of content) {
+			for (const text of line.values) {
+				//Send options to text, for the text. this we can use to have dynamic text styles.
+				this.page.drawText(text.value, { size: 10 })
+				this.page.moveDown(text.size.height)
+			}
+		}
 	}
 
 	async export(meta: MetaData): Promise<Uint8Array> {
