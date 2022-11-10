@@ -53,4 +53,11 @@ describe("docly.Operation", () => {
 
 		expect(result.length).toBeGreaterThan(3)
 	})
+
+	// Create test for adding page
+
+	it("pagination", async () => {
+		const canvas = await Canvas.create(style) // Create test for adding page
+		// Add bounds, that height == 0, to see if page is added when rendering.
+	})
 })
