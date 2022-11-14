@@ -10,35 +10,39 @@ import { Context } from "./Context"
 import { Line } from "./Line"
 
 export class Canvas {
+	currentBounds: Bounds
 	private constructor(
 		readonly context: Context,
 		readonly document: pdf.PDFDocument,
 		private page: pdf.PDFPage,
 		readonly bounds: Bounds
-	) {}
+	) {
+		this.currentBounds = { ...bounds }
+	}
 
 	movePointer(x: number, y: number) {
 		this.page.moveTo(x, y)
 	}
 	render(content: Line[]): void {
-		// TODO: draw text & update bounds
-		// Bounds are tied to the page, need to update to original bounds when pagination happens.
-		// Tie them with page?
-		let height = 0
-		this.movePointer(this.bounds.left, this.bounds.height)
+		this.movePointer(this.currentBounds.left, this.currentBounds.height)
 		for (const line of content) {
-			if (this.bounds.height <= height) {
-				this.page = this.document.addPage()
-				this.movePointer(this.bounds.left, this.bounds.height)
+			if (this.currentBounds.height - line.size.height <= 0) {
+				this.reset()
 			}
 
 			for (const text of line.values) {
 				//Send options to text, for the text. this we can use to have dynamic text styles.
-				this.page.drawText(text.value, { size: 10 })
+				this.page.drawText(text.value, { size: text.context.style?.font?.size })
 			}
 			this.page.moveDown(line.size.height) // Refactor?
-			height += line.size.height
+			this.currentBounds.height = this.currentBounds.height -= line.size.height
 		}
+	}
+
+	private reset() {
+		this.page = this.document.addPage()
+		this.currentBounds = { ...this.bounds }
+		this.movePointer(this.currentBounds.left, this.currentBounds.height)
 	}
 
 	async export(meta: MetaData): Promise<Uint8Array> {

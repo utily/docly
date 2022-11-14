@@ -13,7 +13,7 @@ export namespace Page {
 		switch (page.size) {
 			default:
 			case "a4":
-				size = { width: 400, height: 800 }
+				size = { width: 550, height: 800 }
 				break
 		}
 		return Bounds.reduce(Bounds.fromSize(size), page.margin)
