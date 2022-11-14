@@ -1,5 +1,5 @@
 import * as pdf from "pdf-lib"
-import { Context } from "./Canvas/Context"
+import { Context } from "../Canvas/Context"
 import { Inline } from "./Inline"
 
 export class Text extends Inline {

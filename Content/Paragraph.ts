@@ -1,16 +1,22 @@
+import { Bounds } from "../Bounds"
+import { Context } from "../Canvas/Context"
+import { Line } from "../Canvas/Line"
 import { Block } from "./Block"
-import { Context } from "./Canvas/Context"
-import { Line } from "./Canvas/Line"
-import { Inline } from "./Inline"
 
 export class Paragraph extends Block {
-	getOperations(context: Context): Line[] {
-		throw new Error("Method not implemented.")
-	}
-	constructor(readonly content: Inline[]) {
+	/*
+	Need to take a text, style it with new context, return it to canvas? 
+	Bounds?! Does it need to be on every 
+	*/
+	bounds: Bounds
+	constructor(readonly content: string) {
 		super()
 	}
+	getOperations(context: Context): Line[] {
+		context.breakIntoLines(content)
+	}
 }
+
 // OLD GETTER, NEEDS REWORK
 // getOperations(canvas: Operation, options: Options): Operation.Line[] {
 // 		options = options.modify(canvas.style.paragraph).modify(this.style)
