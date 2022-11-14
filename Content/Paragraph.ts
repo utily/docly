@@ -1,19 +1,29 @@
 import { Bounds } from "../Bounds"
-import { Context } from "../Canvas/Context"
+import { Canvas } from "../Canvas/Canvas"
 import { Line } from "../Canvas/Line"
 import { Block } from "./Block"
 
 export class Paragraph extends Block {
 	/*
 	Need to take a text, style it with new context, return it to canvas? 
-	Bounds?! Does it need to be on every 
+	Bounds?! Does it need to be on every
+	
+	What does a paragraph need? 
+	* Bounds (Internal)
+	* Style
+	*	Content
+	* Block elements, has margins around and takes full width (Bound width.)
 	*/
+
 	bounds: Bounds
 	constructor(readonly content: string) {
 		super()
 	}
-	getOperations(context: Context): Line[] {
-		context.breakIntoLines(content)
+	getOperations(Canvas: Canvas): Line[] {
+		throw new Error("No implementation")
+	}
+	createBounds(): Bounds {
+		throw new Error("Method not implemented.")
 	}
 }
 

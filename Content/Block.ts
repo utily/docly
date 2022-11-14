@@ -1,6 +1,9 @@
-import { Canvas } from "./Canvas"
+import { Bounds } from "../Bounds"
+import { Canvas } from "../Canvas/Canvas"
+import { Line } from "../Canvas/Line"
 import { Node } from "./Node"
 
 export abstract class Block extends Node {
-	abstract getOperations(context: Canvas.Context): Canvas.Line[]
+	abstract getOperations(canvas: Canvas): Line[]
+	abstract createBounds(): Bounds
 }
