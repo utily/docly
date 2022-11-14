@@ -45,7 +45,7 @@ export class Context {
 		}
 	}
 	breakIntoLines(text: string, bounds: Bounds, indentation = 0): Text[] {
-		// Bounds.width not working properly
+		
 		return pdf
 			.breakTextIntoLines(text, [...this.wordBreaks], bounds.width, text =>
 				this.options.font.widthOfTextAtSize(text, this.options.size)
