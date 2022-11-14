@@ -2,6 +2,7 @@ import * as isoly from "isoly"
 import fontkit from "@pdf-lib/fontkit"
 import fetch from "isomorphic-fetch"
 import * as pdf from "pdf-lib"
+import { highSurrogate } from "pdf-lib"
 import { Bounds } from "../Bounds"
 import { MetaData } from "../MetaData"
 import { Style } from "../Style"
@@ -20,28 +21,39 @@ export class Canvas {
 		this.page.moveTo(x, y)
 	}
 	render(content: Line[]): void {
-		if (this.bounds.height < 0) this.page = this.document.addPage()
 		// TODO: draw text & update bounds
 		// Bounds are tied to the page, need to update to original bounds when pagination happens.
 		// Tie them with page?
-
-		this.movePointer(20, 700)
+		let height = 0
+		this.movePointer(this.bounds.left, this.bounds.height)
 		for (const line of content) {
+			if (this.bounds.height <= height) {
+				this.page = this.document.addPage()
+				this.movePointer(this.bounds.left, this.bounds.height)
+			}
+
 			for (const text of line.values) {
 				//Send options to text, for the text. this we can use to have dynamic text styles.
 				this.page.drawText(text.value, { size: 10 })
-				this.page.moveDown(text.size.height) // Refactor?
 			}
+			this.page.moveDown(line.size.height) // Refactor?
+			height += line.size.height
 		}
 	}
 
 	async export(meta: MetaData): Promise<Uint8Array> {
-		if (meta.title) this.document.setTitle(meta.title)
-		if (meta.author) this.document.setAuthor(meta.author)
-		if (meta.subject) this.document.setSubject(meta.subject)
-		if (meta.keywords) this.document.setKeywords(meta.keywords)
-		if (meta.created) this.document.setCreationDate(isoly.DateTime.parse(meta.created))
-		if (meta.modified) this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
+		if (meta.title)
+			this.document.setTitle(meta.title)
+		if (meta.author)
+			this.document.setAuthor(meta.author)
+		if (meta.subject)
+			this.document.setSubject(meta.subject)
+		if (meta.keywords)
+			this.document.setKeywords(meta.keywords)
+		if (meta.created)
+			this.document.setCreationDate(isoly.DateTime.parse(meta.created))
+		if (meta.modified)
+			this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
 		return await this.document.save()
 	}
 	static async create(style: Style): Promise<Canvas> {
