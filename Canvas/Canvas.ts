@@ -2,7 +2,6 @@ import * as isoly from "isoly"
 import fontkit from "@pdf-lib/fontkit"
 import fetch from "isomorphic-fetch"
 import * as pdf from "pdf-lib"
-import { highSurrogate } from "pdf-lib"
 import { Bounds } from "../Bounds"
 import { MetaData } from "../MetaData"
 import { Style } from "../Style"
@@ -12,12 +11,16 @@ import { Line } from "./Line"
 export class Canvas {
 	currentBounds: Bounds
 	private constructor(
-		readonly context: Context,
+		public context: Context,
 		readonly document: pdf.PDFDocument,
 		private page: pdf.PDFPage,
 		readonly bounds: Bounds
 	) {
 		this.currentBounds = { ...bounds }
+	}
+
+	setContext(context: Context) {
+		this.context = context
 	}
 
 	movePointer(x: number, y: number) {
@@ -34,7 +37,7 @@ export class Canvas {
 				//Send options to text, for the text. this we can use to have dynamic text styles.
 				this.page.drawText(text.value, { size: text.context.style?.font?.size })
 			}
-			this.page.moveDown(line.size.height) // Refactor?
+			this.page.moveDown(line.size.height) //
 			this.currentBounds.height = this.currentBounds.height -= line.size.height
 		}
 	}
