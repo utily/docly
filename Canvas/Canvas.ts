@@ -34,7 +34,6 @@ export class Canvas {
 			}
 
 			for (const text of line.values) {
-				//Send options to text, for the text. this we can use to have dynamic text styles.
 				this.page.drawText(text.value, { size: text.context.style?.font?.size })
 			}
 			this.page.moveDown(line.size.height) //
