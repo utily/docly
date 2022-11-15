@@ -4,6 +4,7 @@ import path from "path"
 import { Bounds } from "../Bounds"
 import { DefinitionList } from "../Content/DefinitionList"
 import { Paragraph } from "../Content/Paragraph"
+import { DefinitionListType } from "../DefinitionList"
 import { Style } from "../Style"
 import { Canvas } from "./index"
 
@@ -33,13 +34,14 @@ describe("docly.Operation", () => {
 			ubuntuBold: "https://pdf-lib.js.org/assets/ubuntu/Ubuntu-B.ttf",
 		},
 		font: { name: "ubuntuBold", size: 20 },
-		header: {
-			font: { name: "ubuntu", size: 16 },
-		},
-		emphasize: {
-			font: { name: "ubuntuBold", size: 10 },
-		},
-		paragraph: { font: { name: "ubuntu", size: 10 } },
+	}
+
+	const definitionListInvoices: DefinitionListType = {
+		header: "Invoices",
+		values: [
+			{ name: "AbraCadabra AB", content: ["Ett", "Två", "tre"] },
+			{ name: "Bahuuuba AB", content: ["fyra", "fem", "sex"] },
+		],
 	}
 
 	const newText =
@@ -51,7 +53,7 @@ describe("docly.Operation", () => {
 		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context))
 		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style2)))
 		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style)))
-		canvas.render(new DefinitionList(["Invoice", "1002300120"]).getOperations(canvas.context))
+		canvas.render(new DefinitionList(definitionListInvoices).getOperations(canvas.context))
 		expect(await canvas.export({ title: "The Power of Attraction" })).toMatchFile(
 			path.join(__dirname, "test", "simple.pdf")
 		)
