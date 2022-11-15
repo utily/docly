@@ -19,7 +19,9 @@ export class DefinitionList extends Block {
 	}
 	getOperations(context: Context): Line[] {
 		const definitionOperations: Line[] = []
-		definitionOperations.push(context.modify(this.style).create("line", [context.create("text", this.content.header)]))
+
+		const headerContext: Context = context.modify(this.style2)
+		definitionOperations.push(headerContext.create("line", [context.create("text", this.content.header)]))
 
 		this.content.values.forEach(key => {
 			definitionOperations.push(context.create("line", [context.create("text", key.name)]))
