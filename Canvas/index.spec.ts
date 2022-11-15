@@ -2,6 +2,7 @@ import "isomorphic-fetch"
 import { toMatchFile } from "jest-file-snapshot"
 import path from "path"
 import { Bounds } from "../Bounds"
+import { DefinitionList } from "../Content/DefinitionList"
 import { Paragraph } from "../Content/Paragraph"
 import { Style } from "../Style"
 import { Canvas } from "./index"
@@ -47,14 +48,10 @@ describe("docly.Operation", () => {
 	it("simple", async () => {
 		const canvas = await Canvas.create(style)
 
-		canvas.render(
-			canvas.context.breakIntoLines(newText, canvas.bounds).map(line => canvas.context.create("line", [line]))
-		)
-
-		canvas.setContext(canvas.context.modify(style2))
-		canvas.render(
-			canvas.context.breakIntoLines(newText, canvas.bounds).map(line => canvas.context.create("line", [line]))
-		)
+		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context))
+		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style2)))
+		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style)))
+		canvas.render(new DefinitionList(["Invoice", "1002300120"]).getOperations(canvas.context))
 		expect(await canvas.export({ title: "The Power of Attraction" })).toMatchFile(
 			path.join(__dirname, "test", "simple.pdf")
 		)
