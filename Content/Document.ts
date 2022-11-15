@@ -1,9 +1,11 @@
 import { Canvas } from "../Canvas/Canvas"
 import { Style } from "../Style"
+import { Paragraph } from "./Paragraph"
 
 export class Document {
 	canvas: Canvas
 	style: Style
+
 	constructor() {
 		this.style = {
 			page: { size: "a4", margin: { top: 20, left: 20, bottom: 20, right: 20 } },
@@ -12,13 +14,6 @@ export class Document {
 				ubuntuBold: "https://pdf-lib.js.org/assets/ubuntu/Ubuntu-B.ttf",
 			},
 			font: { name: "ubuntu", size: 10 },
-			header: {
-				font: { name: "ubuntu", size: 16 },
-			},
-			emphasize: {
-				font: { name: "ubuntuBold", size: 10 },
-			},
-			paragraph: { font: { name: "ubuntu", size: 10 } },
 		}
 
 		this.createCanvas()
@@ -29,6 +24,8 @@ export class Document {
 	}
 
 	takeInput(string: string) {
-		//What structure will come here?
+		if (Paragraph) {
+			new Paragraph(string, this.canvas.bounds)
+		}
 	}
 }

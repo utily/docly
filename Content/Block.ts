@@ -1,9 +1,9 @@
 import { Bounds } from "../Bounds"
-import { Canvas } from "../Canvas/Canvas"
+import { Context } from "../Canvas/Context"
 import { Line } from "../Canvas/Line"
 import { Node } from "./Node"
 
 export abstract class Block extends Node {
-	abstract getOperations(canvas: Canvas): Line[]
+	abstract getOperations(context: Context): Line[]
 	abstract createBounds(): Bounds
 }
