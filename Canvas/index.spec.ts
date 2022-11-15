@@ -2,6 +2,7 @@ import "isomorphic-fetch"
 import { toMatchFile } from "jest-file-snapshot"
 import path from "path"
 import { Bounds } from "../Bounds"
+import { Paragraph } from "../Content/Paragraph"
 import { Style } from "../Style"
 import { Canvas } from "./index"
 
@@ -84,5 +85,17 @@ describe("docly.Operation", () => {
 		const pages = Math.floor(height / canvas.bounds.height) + 1
 
 		expect(pages).toBe(canvas.document.getPageCount())
+	})
+
+	it("create Paragraph", async () => {
+		const canvas = await Canvas.create(style)
+
+		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context))
+		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style2)))
+		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style)))
+
+		expect(await canvas.export({ title: "The Power of Attraction" })).toMatchFile(
+			path.join(__dirname, "test", "paragraph.pdf")
+		)
 	})
 })
