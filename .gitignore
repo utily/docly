@@ -3,3 +3,4 @@ dist
 .env
 .npmrc
 Canvas/test/simple.pdf
+Canvas/test/paragraph.pdf
