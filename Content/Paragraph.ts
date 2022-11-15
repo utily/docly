@@ -19,11 +19,13 @@ export class Paragraph extends Block {
 		super()
 	}
 	getOperations(context: Context): Line[] {
-		const ads = context.breakIntoLines(this.content, this.bounds).map(line => context.create("line", [line]))
-		ads.unshift(context.create("line", [context.create("text", " ")]))
-		ads.push(context.create("line", [context.create("text", " ")]))
+		const paragraphOperations = context
+			.breakIntoLines(this.content, this.bounds)
+			.map(line => context.create("line", [line]))
+		paragraphOperations.unshift(context.create("line", [context.create("text", " ")]))
+		paragraphOperations.push(context.create("line", [context.create("text", " ")]))
 
-		return ads
+		return paragraphOperations
 	}
 	createBounds(): Bounds {
 		throw new Error("Method not implemented.")
