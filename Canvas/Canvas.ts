@@ -35,8 +35,10 @@ export class Canvas {
 
 			for (const text of line.values) {
 				this.page.drawText(text.value, { size: text.context.style?.font?.size })
+				this.page.moveRight(text.size.width)
 			}
-			this.page.moveDown(line.size.height) //
+			this.page.moveDown(line.size.height)
+			this.page.moveLeft(line.size.width)
 			this.currentBounds.height = this.currentBounds.height -= line.size.height
 		}
 	}
@@ -48,18 +50,12 @@ export class Canvas {
 	}
 
 	async export(meta: MetaData): Promise<Uint8Array> {
-		if (meta.title)
-			this.document.setTitle(meta.title)
-		if (meta.author)
-			this.document.setAuthor(meta.author)
-		if (meta.subject)
-			this.document.setSubject(meta.subject)
-		if (meta.keywords)
-			this.document.setKeywords(meta.keywords)
-		if (meta.created)
-			this.document.setCreationDate(isoly.DateTime.parse(meta.created))
-		if (meta.modified)
-			this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
+		if (meta.title) this.document.setTitle(meta.title)
+		if (meta.author) this.document.setAuthor(meta.author)
+		if (meta.subject) this.document.setSubject(meta.subject)
+		if (meta.keywords) this.document.setKeywords(meta.keywords)
+		if (meta.created) this.document.setCreationDate(isoly.DateTime.parse(meta.created))
+		if (meta.modified) this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
 		return await this.document.save()
 	}
 	static async create(style: Style): Promise<Canvas> {
