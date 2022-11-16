@@ -4,7 +4,8 @@ import path from "path"
 import { Bounds } from "../Bounds"
 import { DefinitionList } from "../Content/DefinitionList"
 import { Paragraph } from "../Content/Paragraph"
-import { DefinitionListType } from "../DefinitionList"
+import { Table } from "../Content/Table"
+import * as structure from "../Datastructure"
 import { Style } from "../Style"
 import { Canvas } from "./index"
 
@@ -36,11 +37,23 @@ describe("docly.Operation", () => {
 		font: { name: "ubuntuBold", size: 20 },
 	}
 
-	const definitionListInvoices: DefinitionListType = {
+	const definitionListInvoices: structure.DefinitionList = {
 		header: "Invoices",
 		values: [
 			{ name: "AbraCadabra AB", content: ["Ett", "Två", "tre"] },
 			{ name: "Bahuuuba AB", content: ["fyra", "fem", "sex"] },
+		],
+	}
+
+	const testTable: structure.Table = {
+		name: "Test",
+		columns: [
+			{ data: ["Name", "Tobias", "Elias", "Linus", "Simon"] },
+			{ data: ["Hobby", "Kids", "Gaming", "Parkour", "Coding"] },
+			{ data: ["Car", "Volvo", "Porsche", "Fiat", "VW"] },
+			{ data: ["Car", "Volvo", "Porsche", "Fiat", "VW"] },
+			{ data: ["Car", "Volvo", "Porsche", "Fiat", "VW"] },
+			{ data: ["Pets", "Dog", "Parrot", "Dog", "Cats"] },
 		],
 	}
 
@@ -50,10 +63,11 @@ describe("docly.Operation", () => {
 	it("simple", async () => {
 		const canvas = await Canvas.create(style)
 
-		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context))
-		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style2)))
-		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style)))
-		canvas.render(new DefinitionList(definitionListInvoices).getOperations(canvas.context))
+		// canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context))
+		// canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style2)))
+		// canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style)))
+		// canvas.render(new DefinitionList(definitionListInvoices).getOperations(canvas.context))
+		canvas.render(new Table(testTable, canvas.bounds).getOperations(canvas.context))
 		expect(await canvas.export({ title: "The Power of Attraction" })).toMatchFile(
 			path.join(__dirname, "test", "simple.pdf")
 		)

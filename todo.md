@@ -14,7 +14,8 @@
 - [ ] We also need to check centralized etc
 - [x] NEed to implement definition list
 - [ ] Store different style in canvas?
-
+- [ ] add pdf (receipts)
+- [ ] add img 
 # Notes
 
 ## General flow
@@ -26,7 +27,7 @@
 > > > Types creates Operations, sends for rendering
 
 What do we use Element Bounds for?
-Do we use element Bounds? We have them implementented in BLock and inline Content, but not completely sure. Should we use Indention? Still not sure how layouting should work.
+Do we use element Bounds? We have them implemented in BLock and inline Content, but not completely sure. Should we use Indention? Still not sure how layouting should work.
 
 ### Elements
 
