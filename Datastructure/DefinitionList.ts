@@ -1,4 +1,4 @@
-export interface DefinitionListType {
+export interface DefinitionList {
 	header: string
 	values: { name: string; content: string[] }[]
 }
