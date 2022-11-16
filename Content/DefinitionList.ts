@@ -1,7 +1,7 @@
 import { Bounds } from "../Bounds"
 import { Context } from "../Canvas/Context"
 import { Line } from "../Canvas/Line"
-import { DefinitionListType } from "../DefinitionList"
+import * as structure from "../Datastructure/"
 import { Style } from "../Style/index"
 import { Block } from "./Block"
 
@@ -14,14 +14,14 @@ export class DefinitionList extends Block {
 		},
 		font: { name: "ubuntuBold", size: 20 },
 	}
-	constructor(readonly content: DefinitionListType) {
+	constructor(readonly content: structure.DefinitionList) {
 		super()
 	}
 	getOperations(context: Context): Line[] {
 		const definitionOperations: Line[] = []
 
 		const headerContext: Context = context.modify(this.style2)
-		definitionOperations.push(headerContext.create("line", [context.create("text", this.content.header)]))
+		definitionOperations.push(headerContext.create("line", [headerContext.create("text", this.content.header)]))
 
 		this.content.values.forEach(key => {
 			definitionOperations.push(context.create("line", [context.create("text", key.name)]))
@@ -37,14 +37,3 @@ export class DefinitionList extends Block {
 		throw new Error("Method not implemented.")
 	}
 }
-
-// VAd ska definitionslsita vara för datastruktur?
-
-// Term
-// 	name
-// 	name
-// 	name
-// term
-// 	name
-// term
-// 	name

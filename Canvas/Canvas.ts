@@ -3,7 +3,7 @@ import fontkit from "@pdf-lib/fontkit"
 import fetch from "isomorphic-fetch"
 import * as pdf from "pdf-lib"
 import { Bounds } from "../Bounds"
-import { MetaData } from "../MetaData"
+import { MetaData } from "../Datastructure/MetaData"
 import { Style } from "../Style"
 import { Context } from "./Context"
 import { Line } from "./Line"
@@ -23,22 +23,27 @@ export class Canvas {
 		this.context = context
 	}
 
-	movePointer(x: number, y: number) {
-		this.page.moveTo(x, y)
-	}
 	render(content: Line[]): void {
-		this.movePointer(this.currentBounds.left, this.currentBounds.height)
+		/**
+		 * If(style.x and style y) use that, else use getPosition etc.
+		 */
+		this.page.moveTo(this.currentBounds.left, this.currentBounds.height)
 		for (const line of content) {
 			if (this.currentBounds.height - line.size.height <= 0) {
 				this.reset()
 			}
 
 			for (const text of line.values) {
-				this.page.drawText(text.value, { size: text.context.style?.font?.size })
-				this.page.moveRight(text.size.width)
+				if (text.indentation) {
+					this.page.moveTo(text.indentation, this.page.getPosition().y)
+					this.page.drawText(text.value, { size: text.context.style?.font?.size })
+				} else {
+					this.page.drawText(text.value, { size: text.context.style?.font?.size })
+					this.page.moveRight(text.size.width)
+				}
 			}
 			this.page.moveDown(line.size.height)
-			this.page.moveLeft(line.size.width)
+			this.page.moveTo(this.currentBounds.left, this.page.getPosition().y)
 			this.currentBounds.height = this.currentBounds.height -= line.size.height
 		}
 	}
@@ -46,16 +51,22 @@ export class Canvas {
 	private reset() {
 		this.page = this.document.addPage()
 		this.currentBounds = { ...this.bounds }
-		this.movePointer(this.currentBounds.left, this.currentBounds.height)
+		this.page.moveTo(this.currentBounds.left, this.currentBounds.height)
 	}
 
 	async export(meta: MetaData): Promise<Uint8Array> {
-		if (meta.title) this.document.setTitle(meta.title)
-		if (meta.author) this.document.setAuthor(meta.author)
-		if (meta.subject) this.document.setSubject(meta.subject)
-		if (meta.keywords) this.document.setKeywords(meta.keywords)
-		if (meta.created) this.document.setCreationDate(isoly.DateTime.parse(meta.created))
-		if (meta.modified) this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
+		if (meta.title)
+			this.document.setTitle(meta.title)
+		if (meta.author)
+			this.document.setAuthor(meta.author)
+		if (meta.subject)
+			this.document.setSubject(meta.subject)
+		if (meta.keywords)
+			this.document.setKeywords(meta.keywords)
+		if (meta.created)
+			this.document.setCreationDate(isoly.DateTime.parse(meta.created))
+		if (meta.modified)
+			this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
 		return await this.document.save()
 	}
 	static async create(style: Style): Promise<Canvas> {

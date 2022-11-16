@@ -1,6 +1,6 @@
 import * as pdf from "pdf-lib"
 import { Bounds } from "../Bounds"
-import { Size } from "../Size"
+import { Size } from "../Datastructure/Size"
 import { Style } from "../Style"
 import { Inline } from "./Inline"
 import { Line } from "./Line"
@@ -25,7 +25,7 @@ export class Context {
 		return new Context(this.fonts, this.wordBreaks, Style.Block.merge(this.style, style))
 	}
 	create(type: "line", content: Inline[]): Line
-	create(type: "text", text: string): Text
+	create(type: "text", text: string, indentation?: number): Text
 	create(type: Type, ...argument: any[]): Operation {
 		let result: Operation
 		switch (type) {
@@ -33,7 +33,7 @@ export class Context {
 				result = new Line(this, argument[0])
 				break
 			case "text":
-				result = new Text(this, argument[0])
+				result = new Text(this, argument[0], argument[1])
 				break
 		}
 		return result
