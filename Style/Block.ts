@@ -1,4 +1,4 @@
-import { Margin } from "../Margin"
+import { Margin } from "../Datastructure/Margin"
 import { Color } from "./Color"
 import { Text } from "./Text"
 

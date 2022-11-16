@@ -1,4 +1,4 @@
-import { Size } from "../Size"
+import { Size } from "../Datastructure/Size"
 import { Context } from "./Context"
 
 export abstract class Operation {

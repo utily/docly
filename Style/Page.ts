@@ -1,6 +1,6 @@
 import { Bounds } from "../Bounds"
-import { Margin } from "../Margin"
-import { Size } from "../Size"
+import { Margin } from "../Datastructure/Margin"
+import { Size } from "../Datastructure/Size"
 
 export interface Page {
 	size?: "a4"

@@ -1,4 +1,4 @@
-import { Margin as StyleMargin } from "../Margin"
+import { Margin as StyleMargin } from "../Datastructure/Margin"
 import { Block as StyleBlock } from "./Block"
 import { Color as StyleColor } from "./Color"
 import { Page as StylePage } from "./Page"

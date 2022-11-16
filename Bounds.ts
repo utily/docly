@@ -1,5 +1,5 @@
-import { Margin } from "./Margin"
-import { Size } from "./Size"
+import { Margin } from "./Datastructure/Margin"
+import { Size } from "./Datastructure/Size"
 
 export interface Bounds {
 	left: number
