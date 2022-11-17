@@ -109,16 +109,4 @@ describe("docly.Operation", () => {
 
 		expect(pages).toBe(canvas.document.getPageCount())
 	})
-
-	it("create Paragraph", async () => {
-		const canvas = await Canvas.create(style)
-
-		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context))
-		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style2)))
-		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style)))
-
-		expect(await canvas.export({ title: "The Power of Attraction" })).toMatchFile(
-			path.join(__dirname, "test", "paragraph.pdf")
-		)
-	})
 })

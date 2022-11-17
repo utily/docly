@@ -1,8 +1,9 @@
+import { Block } from "./Block"
 import { Context } from "./Context"
 import { Operation } from "./Operation"
 import { Text } from "./Text"
 
-export class Line extends Operation {
+export class Line extends Block {
 	constructor(context: Context, readonly values: readonly Text[]) {
 		super(
 			context,
