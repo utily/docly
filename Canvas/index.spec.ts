@@ -1,6 +1,7 @@
 import "isomorphic-fetch"
 import { toMatchFile } from "jest-file-snapshot"
 import path from "path"
+import { rotateAndSkewTextDegreesAndTranslate } from "pdf-lib"
 import { Bounds } from "../Bounds"
 import { DefinitionList } from "../Content/DefinitionList"
 import { Paragraph } from "../Content/Paragraph"
@@ -46,14 +47,23 @@ describe("docly.Operation", () => {
 	}
 
 	const testTable: structure.Table = {
-		name: "Test",
-		columns: [
-			{ data: ["Name", "Tobias", "Elias", "Linus", "Simon"] },
-			{ data: ["Hobby", "Kids", "Gaming", "Parkour", "Coding"] },
-			{ data: ["Car", "Volvo", "Porsche", "Fiat", "VW"] },
-			{ data: ["Car", "Volvo", "Porsche", "Fiat", "VW"] },
-			{ data: ["Car", "Volvo", "Porsche", "Fiat", "VW"] },
-			{ data: ["Pets", "Dog", "Parrot", "Dog", "Cats"] },
+		header: {
+			cells: [
+				{ data: "Name" },
+				{ data: "Car" },
+				{ data: "Colour" },
+				{ data: "Football Team" },
+				{ data: "Football Team" },
+				{ data: "Football Team" },
+			],
+		},
+		body: [
+			{ cells: [{ data: "Tobias" }, { data: "Alexandra" }, { data: "Ellenor" }, { data: "William" }] },
+			{ cells: [{ data: "Saab" }, { data: "Volvo" }, { data: "Brio" }, { data: "Brio" }] },
+			{ cells: [{ data: "Green" }, { data: "Blue" }, { data: "Pink" }, { data: "Orange" }] },
+			{ cells: [{ data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }] },
+			{ cells: [{ data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }] },
+			{ cells: [{ data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }] },
 		],
 	}
 
@@ -63,10 +73,10 @@ describe("docly.Operation", () => {
 	it("simple", async () => {
 		const canvas = await Canvas.create(style)
 
-		// canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context))
-		// canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style2)))
-		// canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style)))
-		// canvas.render(new DefinitionList(definitionListInvoices).getOperations(canvas.context))
+		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context))
+		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style2)))
+		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style)))
+		canvas.render(new DefinitionList(definitionListInvoices).getOperations(canvas.context))
 		canvas.render(new Table(testTable, canvas.bounds).getOperations(canvas.context))
 		expect(await canvas.export({ title: "The Power of Attraction" })).toMatchFile(
 			path.join(__dirname, "test", "simple.pdf")
