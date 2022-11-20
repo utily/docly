@@ -5,6 +5,7 @@ import * as pdf from "pdf-lib"
 import { Bounds } from "../Bounds"
 import { MetaData } from "../Datastructure/MetaData"
 import { Style } from "../Style"
+import { Block } from "./Block"
 import { Context } from "./Context"
 import { Line } from "./Line"
 
@@ -23,29 +24,11 @@ export class Canvas {
 		this.context = context
 	}
 
-	render(content: Line[]): void {
+	render(content: Block[]): void {
 		/**
-		 * If(style.x and style y) use that, else use getPosition etc.
+		 * Take a block, check its bounds, recursive rendering.
+		 * when find content, render it.
 		 */
-		this.page.moveTo(this.currentBounds.left, this.currentBounds.height)
-		for (const line of content) {
-			if (this.currentBounds.height - line.size.height <= 0) {
-				this.reset()
-			}
-
-			for (const text of line.values) {
-				if (text.indentation) {
-					this.page.moveTo(text.indentation, this.page.getPosition().y)
-					this.page.drawText(text.value, { size: text.context.style?.font?.size })
-				} else {
-					this.page.drawText(text.value, { size: text.context.style?.font?.size })
-					this.page.moveRight(text.size.width)
-				}
-			}
-			this.page.moveDown(line.size.height)
-			this.page.moveTo(this.currentBounds.left, this.page.getPosition().y)
-			this.currentBounds.height = this.currentBounds.height -= line.size.height
-		}
 	}
 
 	private reset() {
@@ -55,18 +38,12 @@ export class Canvas {
 	}
 
 	async export(meta: MetaData): Promise<Uint8Array> {
-		if (meta.title)
-			this.document.setTitle(meta.title)
-		if (meta.author)
-			this.document.setAuthor(meta.author)
-		if (meta.subject)
-			this.document.setSubject(meta.subject)
-		if (meta.keywords)
-			this.document.setKeywords(meta.keywords)
-		if (meta.created)
-			this.document.setCreationDate(isoly.DateTime.parse(meta.created))
-		if (meta.modified)
-			this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
+		if (meta.title) this.document.setTitle(meta.title)
+		if (meta.author) this.document.setAuthor(meta.author)
+		if (meta.subject) this.document.setSubject(meta.subject)
+		if (meta.keywords) this.document.setKeywords(meta.keywords)
+		if (meta.created) this.document.setCreationDate(isoly.DateTime.parse(meta.created))
+		if (meta.modified) this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
 		return await this.document.save()
 	}
 	static async create(style: Style): Promise<Canvas> {
