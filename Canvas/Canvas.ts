@@ -30,7 +30,7 @@ export class Canvas {
 			if (Array.isArray(block.content)) {
 				for (const row of block.content) {
 					row.bounds = { ...row.bounds, left: block.bounds.left, top: block.bounds.top - row.bounds.height }
-					this.render(row.blocks)
+					this.render(row.blocks) //Somelock is not iterable??
 				}
 			} else {
 				this.page.drawText(block.content, { x: block.bounds.left, y: block.bounds.top })
