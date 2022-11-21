@@ -1,6 +1,6 @@
 import { Bounds } from "../Bounds"
+import { Block as OperationBlock } from "../Canvas/Block"
 import { Context } from "../Canvas/Context"
-import { Line } from "../Canvas/Line"
 import { Block } from "./Block"
 
 export class Paragraph extends Block {
@@ -18,14 +18,13 @@ export class Paragraph extends Block {
 	constructor(readonly content: string, readonly bounds: Bounds) {
 		super()
 	}
-	getOperations(context: Context): Line[] {
-		const paragraphOperations = context
-			.breakIntoLines(this.content, this.bounds)
-			.map(line => context.create("line", [line]))
-		paragraphOperations.unshift(context.create("line", [context.create("text", " ")]))
-		paragraphOperations.push(context.create("line", [context.create("text", " ")]))
+	getOperations(context: Context): OperationBlock {
+		const paragraphOperations = context.breakIntoLines(this.content, this.bounds)
 
-		return paragraphOperations
+		const newHeight = paragraphOperations.reduce((height, row) => row.bounds.height + height, 0)
+		const newBounds = { ...this.bounds, height: newHeight }
+		const blockToSend: OperationBlock = new OperationBlock(context, newBounds, paragraphOperations)
+		return blockToSend
 	}
 	createBounds(): Bounds {
 		throw new Error("Method not implemented.")

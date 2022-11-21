@@ -7,34 +7,42 @@ import { MetaData } from "../Datastructure/MetaData"
 import { Style } from "../Style"
 import { Block } from "./Block"
 import { Context } from "./Context"
-import { Line } from "./Line"
 
 export class Canvas {
-	currentBounds: Bounds
+	currentPageBounds: Bounds
 	private constructor(
 		public context: Context,
 		readonly document: pdf.PDFDocument,
 		private page: pdf.PDFPage,
-		readonly bounds: Bounds
+		readonly pageBounds: Bounds
 	) {
-		this.currentBounds = { ...bounds }
+		this.currentPageBounds = { ...pageBounds }
 	}
 
 	setContext(context: Context) {
 		this.context = context
 	}
 
-	render(content: Block[]): void {
-		/**
-		 * Take a block, check its bounds, recursive rendering.
-		 * when find content, render it.
-		 */
+	render(blocks: Block[]): void {
+		for (const block of blocks) {
+			// Add page break!
+			block.bounds = { ...block.bounds, left: this.pageBounds.left, top: this.pageBounds.top }
+			if (Array.isArray(block.content)) {
+				for (const row of block.content) {
+					row.bounds = { ...row.bounds, left: block.bounds.left, top: block.bounds.top - row.bounds.height }
+					this.render(row.blocks)
+				}
+			} else {
+				this.page.drawText(block.content, { x: block.bounds.left, y: block.bounds.top })
+				this.pageBounds.top = this.pageBounds.top - block.bounds.height
+			}
+		}
 	}
 
 	private reset() {
 		this.page = this.document.addPage()
-		this.currentBounds = { ...this.bounds }
-		this.page.moveTo(this.currentBounds.left, this.currentBounds.height)
+		this.currentPageBounds = { ...this.pageBounds }
+		this.page.moveTo(this.currentPageBounds.left, this.currentPageBounds.height)
 	}
 
 	async export(meta: MetaData): Promise<Uint8Array> {

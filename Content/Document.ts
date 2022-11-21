@@ -25,7 +25,7 @@ export class Document {
 
 	takeInput(string: string) {
 		if (Paragraph) {
-			new Paragraph(string, this.canvas.bounds)
+			new Paragraph(string, this.canvas.pageBounds)
 		}
 	}
 }

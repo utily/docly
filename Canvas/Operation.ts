@@ -1,5 +1,4 @@
 import { Bounds } from "../Bounds"
-import { Size } from "../Datastructure"
 import { Context } from "./Context"
 
 export abstract class Operation {

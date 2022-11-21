@@ -1,1 +1,1 @@
-export type Type = "text" | "line"
+export type Type = "row" | "block"

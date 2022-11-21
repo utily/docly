@@ -15,7 +15,8 @@
 - [x] NEed to implement definition list
 - [ ] Store different style in canvas?
 - [ ] add pdf (receipts)
-- [ ] add img 
+- [ ] add img
+
 # Notes
 
 ## General flow
@@ -38,3 +39,8 @@ _ Content
 _ Block elements, has margins around and takes full width (Bound width.)
 
 - Need some kind of solution to styling. Changing context is not working at the moment. Need to debug there.
+
+### Daily notes
+
+TypeError, Cannot create property bounds on string. Need to check order of creation which should be
+content>row>Block(string)>BlockBig
