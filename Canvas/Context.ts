@@ -30,7 +30,7 @@ export class Context {
 		let result: Operation
 		switch (type) {
 			case "row":
-				result = new Row(this, argument[0], argument[1])
+				result = new Row(this, argument[0], argument[2]) //Something going wrong here, not taking the bounds
 				break
 			case "block":
 				result = new Block(this, argument[0], argument[1])
