@@ -5,6 +5,7 @@ import { Node } from "./Node"
 
 export abstract class Block extends Node {
 	abstract bounds: Bounds
+	abstract offset: number
 	abstract getOperations(context: Context): OperationBlock
 	abstract createBounds(): Bounds
 }

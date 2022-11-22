@@ -10,6 +10,7 @@ import { Context } from "./Context"
 
 export class Canvas {
 	currentPageBounds: Bounds
+	blockMargin = 10 //To be incorporated into blocks
 	private constructor(
 		public context: Context,
 		readonly document: pdf.PDFDocument,
@@ -17,10 +18,6 @@ export class Canvas {
 		readonly pageBounds: Bounds
 	) {
 		this.currentPageBounds = { ...pageBounds }
-	}
-
-	setContext(context: Context) {
-		this.context = context
 	}
 
 	render(blocks: Block[]): void {
@@ -32,12 +29,13 @@ export class Canvas {
 					row.bounds = { ...row.bounds, left: block.bounds.left, top: block.bounds.top - row.bounds.height }
 					this.render(row.blocks)
 				}
+				this.pageBounds.top = this.pageBounds.top - this.blockMargin //Padding between bigblocks
 			} else {
 				this.page.drawText(block.content, {
 					x: block.bounds.left,
 					y: block.bounds.top,
-					size: this.context.options.size,
-					font: this.context.options.font,
+					size: block.context.options.size,
+					font: block.context.options.font,
 				})
 				this.pageBounds.top = this.pageBounds.top - block.bounds.height
 			}

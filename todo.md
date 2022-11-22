@@ -42,5 +42,5 @@ _ Block elements, has margins around and takes full width (Bound width.)
 
 ### Daily notes
 
-TypeError, Cannot create property bounds on string. Need to check order of creation which should be
-content>row>Block(string)>BlockBig
+Fix font and font size for bold
+

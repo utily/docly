@@ -72,9 +72,14 @@ describe("docly.Operation", () => {
 	it("simple", async () => {
 		const canvas = await Canvas.create(style)
 
-		canvas.render([new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context)])
-		// canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style2)))
-		// canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style)))
+		const toRender = [
+			new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context),
+			new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context.modify(style)),
+			new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context.modify(style2)),
+		]
+
+		canvas.render(toRender)
+
 		// canvas.render(new DefinitionList(definitionListInvoices).getOperations(canvas.context))
 		// canvas.render(new Table(testTable, canvas.bounds).getOperations(canvas.context))
 		expect(await canvas.export({ title: "The Power of Attraction" })).toMatchFile(
