@@ -1,7 +1,6 @@
 import "isomorphic-fetch"
 import { toMatchFile } from "jest-file-snapshot"
 import path from "path"
-import { rotateAndSkewTextDegreesAndTranslate } from "pdf-lib"
 import { Bounds } from "../Bounds"
 import { DefinitionList } from "../Content/DefinitionList"
 import { Paragraph } from "../Content/Paragraph"

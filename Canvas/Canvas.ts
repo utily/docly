@@ -30,10 +30,15 @@ export class Canvas {
 			if (Array.isArray(block.content)) {
 				for (const row of block.content) {
 					row.bounds = { ...row.bounds, left: block.bounds.left, top: block.bounds.top - row.bounds.height }
-					this.render(row.blocks) //Somelock is not iterable??
+					this.render(row.blocks)
 				}
 			} else {
-				this.page.drawText(block.content, { x: block.bounds.left, y: block.bounds.top })
+				this.page.drawText(block.content, {
+					x: block.bounds.left,
+					y: block.bounds.top,
+					size: this.context.options.size,
+					font: this.context.options.font,
+				})
 				this.pageBounds.top = this.pageBounds.top - block.bounds.height
 			}
 		}
@@ -46,12 +51,18 @@ export class Canvas {
 	}
 
 	async export(meta: MetaData): Promise<Uint8Array> {
-		if (meta.title) this.document.setTitle(meta.title)
-		if (meta.author) this.document.setAuthor(meta.author)
-		if (meta.subject) this.document.setSubject(meta.subject)
-		if (meta.keywords) this.document.setKeywords(meta.keywords)
-		if (meta.created) this.document.setCreationDate(isoly.DateTime.parse(meta.created))
-		if (meta.modified) this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
+		if (meta.title)
+			this.document.setTitle(meta.title)
+		if (meta.author)
+			this.document.setAuthor(meta.author)
+		if (meta.subject)
+			this.document.setSubject(meta.subject)
+		if (meta.keywords)
+			this.document.setKeywords(meta.keywords)
+		if (meta.created)
+			this.document.setCreationDate(isoly.DateTime.parse(meta.created))
+		if (meta.modified)
+			this.document.setModificationDate(isoly.DateTime.parse(meta.modified))
 		return await this.document.save()
 	}
 	static async create(style: Style): Promise<Canvas> {

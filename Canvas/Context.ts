@@ -24,13 +24,13 @@ export class Context {
 	modify(style: Readonly<Style.Block> = {}): Context {
 		return new Context(this.fonts, this.wordBreaks, Style.Block.merge(this.style, style))
 	}
-	create(type: "row", content: Block[], bounds: Bounds): Row
-	create(type: "block", text: string, bounds: Bounds): Block
+	create(type: "row", bounds: Bounds, content: Block[]): Row
+	create(type: "block", bounds: Bounds, text: string): Block
 	create(type: Type, ...argument: any[]): Operation {
 		let result: Operation
 		switch (type) {
 			case "row":
-				result = new Row(this, argument[0], argument[2]) //Something going wrong here, not taking the bounds
+				result = new Row(this, argument[0], argument[1]) //Something going wrong here, not taking the bounds
 				break
 			case "block":
 				result = new Block(this, argument[0], argument[1])
@@ -52,8 +52,8 @@ export class Context {
 			.map(text => {
 				const updatedSize = this.measure(text)
 				const updatedBounds: Bounds = { ...bounds, width: updatedSize.width, height: updatedSize.height }
-				return this.create("block", text, updatedBounds)
+				return this.create("block", updatedBounds, text)
 			})
-			.map(block => this.create("row", [block], block.bounds))
+			.map(block => this.create("row", block.bounds, [block]))
 	}
 }
