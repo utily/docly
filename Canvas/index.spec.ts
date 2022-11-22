@@ -73,8 +73,10 @@ describe("docly.Operation", () => {
 		const canvas = await Canvas.create(style)
 
 		const toRender = [
+			// Create block with row, with block
 			new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context),
 			new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context.modify(style)),
+
 			new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context.modify(style2)),
 		]
 

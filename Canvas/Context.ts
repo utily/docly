@@ -25,7 +25,7 @@ export class Context {
 		return new Context(this.fonts, this.wordBreaks, Style.Block.merge(this.style, style))
 	}
 	create(type: "row", bounds: Bounds, content: Block[]): Row
-	create(type: "block", bounds: Bounds, text: string): Block
+	create(type: "block", bounds: Bounds, text: string | Row[]): Block
 	create(type: Type, ...argument: any[]): Operation {
 		let result: Operation
 		switch (type) {

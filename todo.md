@@ -42,5 +42,8 @@ _ Block elements, has margins around and takes full width (Bound width.)
 
 ### Daily notes
 
-Fix font and font size for bold
 
+ How to inherit bounds from the top parent for ex. two paragraphs? 
+
+ Block has bounds x,y,w,h 
+ paragraph 1 has x,y  w = p.w/2 h = rows etc.
