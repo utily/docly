@@ -17,6 +17,7 @@ interface Content {
 interface Block {
 	bound: Bound
 	content: Content | Row[]
+	constructor: (blocks: Block[] | content) => void
 }
 
 function draw(content: Content, bound: Bound) {

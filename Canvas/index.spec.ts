@@ -8,6 +8,7 @@ import { Table } from "../Content/Table"
 import * as structure from "../Datastructure"
 import { Style } from "../Style"
 import { Canvas } from "./index"
+import { Row } from "./Row"
 
 expect.extend({ toMatchFile })
 
@@ -45,12 +46,14 @@ describe("docly.Operation", () => {
 		],
 	}
 
+
+
 	const testTable: structure.Table = {
 		header: {
 			cells: [
 				{ data: "Name" },
 				{ data: "Car" },
-				{ data: "Colour" },
+				{ data: "Color" },
 				{ data: "Football Team" },
 				{ data: "Football Team" },
 				{ data: "Football Team" },
@@ -72,15 +75,22 @@ describe("docly.Operation", () => {
 	it("simple", async () => {
 		const canvas = await Canvas.create(style)
 
-		const toRender = [
-			// Create block with row, with block
-			new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context),
-			new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context.modify(style)),
-
-			new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context.modify(style2)),
+		const Row = [
+			canvas.context.create("block", { left: 0, top: 700, width: 400, height: 800 }, [
+				canvas.context.create("row", { left: 0, top: 700, width: 400, height: 800 }, [
+					new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context),
+					new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context.modify(style)),
+				]),
+			]),
 		]
+		// const toRender = [
+		// 	new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context),
+		// 	new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context.modify(style)),
 
-		canvas.render(toRender)
+		// 	new Paragraph(newText, canvas.pageBounds).getOperations(canvas.context.modify(style2)),
+		// ]
+
+		canvas.render(Row)
 
 		// canvas.render(new DefinitionList(definitionListInvoices).getOperations(canvas.context))
 		// canvas.render(new Table(testTable, canvas.bounds).getOperations(canvas.context))
