@@ -48,22 +48,24 @@ describe("docly.Operation", () => {
 
 	const testTable: structure.Table = {
 		header: {
-			cells: [
-				{ data: "Name" },
-				{ data: "Car" },
-				{ data: "Colour" },
-				{ data: "Football Team" },
-				{ data: "Football Team" },
-				{ data: "Football Team" },
-			],
+			cells: [{ data: "Name" }, { data: "Car" }, { data: "Color" }, { data: "Football Team" }],
 		},
 		body: [
-			{ cells: [{ data: "Tobias" }, { data: "Alexandra" }, { data: "Ellenor" }, { data: "William" }] },
-			{ cells: [{ data: "Saab" }, { data: "Volvo" }, { data: "Brio" }, { data: "Brio" }] },
-			{ cells: [{ data: "Green" }, { data: "Blue" }, { data: "Pink" }, { data: "Orange" }] },
-			{ cells: [{ data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }] },
-			{ cells: [{ data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }] },
-			{ cells: [{ data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }, { data: "Arsenal" }] },
+			{ cells: [{ data: "Tobias" }, { data: "Saab" }, { data: "Blue" }, { data: "Arsenal" }] },
+			{ cells: [{ data: "Elias" }, { data: undefined }, { data: "Orange" }, { data: "Arsenal" }] },
+			{ cells: [{ data: "Linus" }, { data: "Monark" }, { data: "Green" }, { data: "Arsenal" }] },
+		],
+	}
+
+	const testTable1: structure.Table = {
+		header: {
+			cells: [{ data: "Cost center" }, { data: "Responsible" }, { data: "Spent" }, { data: "Total" }],
+		},
+		body: [
+			{ cells: [{ data: "Sales	" }, { data: "Tobias" }, { data: "150" }, { data: "200" }] },
+			{ cells: [{ data: "Marketing	" }, { data: "Tobias" }, { data: "150" }, { data: "200" }] },
+			{ cells: [{ data: "Governance	" }, { data: "Tobias" }, { data: "150" }, { data: "200" }] },
+			{ cells: [{ data: "HR	" }, { data: "Tobias" }, { data: "150" }, { data: "200" }] },
 		],
 	}
 
@@ -77,6 +79,7 @@ describe("docly.Operation", () => {
 		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style2)))
 		canvas.render(new Paragraph(newText, canvas.bounds).getOperations(canvas.context.modify(style)))
 		canvas.render(new DefinitionList(definitionListInvoices).getOperations(canvas.context))
+		canvas.render(new Table(testTable1, canvas.bounds).getOperations(canvas.context))
 		canvas.render(new Table(testTable, canvas.bounds).getOperations(canvas.context))
 		expect(await canvas.export({ title: "The Power of Attraction" })).toMatchFile(
 			path.join(__dirname, "test", "simple.pdf")

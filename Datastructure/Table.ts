@@ -1,5 +1,5 @@
 interface Cell {
-	data: string
+	data: string | undefined
 }
 interface Row {
 	cells: Cell[]

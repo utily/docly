@@ -53,21 +53,17 @@ export class Table extends Block {
 			context.create(
 				"line",
 				row.cells.map((cell, ii) =>
-					cell.data ? context.create("text", cell.data, indents[i]) : context.create("text", "undefined", indents[i])
+					cell.data ? context.create("text", cell.data, indents[ii]) : context.create("text", "undefined", indents[ii])
 				)
 			)
 		)
 
-		returnArray.push(
-			...newArray[0].values
-				.map((_, colIndex) => newArray.map(row => row.values[colIndex]))
-				.map(column => context.create("line", [...column]))
-		)
-
-		/**
-		 * Jag vill ta raderna, och göra columner.
-		 *
-		 */
+		// returnArray.push(
+		// 	...newArray[0].values
+		// 		.map((_, colIndex) => newArray.map(row => row.values[colIndex]))
+		// 		.map(column => context.create("line", [...column]))
+		// )
+		returnArray.push(...newArray)
 
 		return returnArray
 	}
