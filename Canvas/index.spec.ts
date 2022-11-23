@@ -63,9 +63,9 @@ describe("docly.Operation", () => {
 		},
 		body: [
 			{ cells: [{ data: "Sales	" }, { data: "Tobias" }, { data: "150" }, { data: "200" }] },
-			{ cells: [{ data: "Marketing	" }, { data: "Tobias" }, { data: "150" }, { data: "200" }] },
-			{ cells: [{ data: "Governance	" }, { data: "Tobias" }, { data: "150" }, { data: "200" }] },
-			{ cells: [{ data: "HR	" }, { data: "Tobias" }, { data: "150" }, { data: "200" }] },
+			{ cells: [{ data: "Marketing	" }, { data: "Kalle" }, { data: "150" }, { data: "200" }] },
+			{ cells: [{ data: "Governance	" }, { data: "Elin" }, { data: "150" }, { data: "200" }] },
+			{ cells: [{ data: "HR	" }, { data: "Matilda" }, { data: "150" }, { data: "200" }] },
 		],
 	}
 

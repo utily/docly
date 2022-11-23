@@ -10,7 +10,3 @@ export interface Table {
 	footer?: Row[]
 }
 
-/**
- * For every column
- * create line( with text[columnt[i].data{i}])
- */
